@@ -1,7 +1,7 @@
-import ConnectDB from '../../../lib/config/dbConfig';
+import ConnectDB from '../../../../lib/config/dbConfig';
 import { NextRequest, NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
-import BlogModel from '../../../models/blogModel';
+import BlogModel from '../../../../models/blogModel';
 
 const LoadDB = async () => {
     await ConnectDB();
