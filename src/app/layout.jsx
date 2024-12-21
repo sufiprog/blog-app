@@ -7,8 +7,8 @@ const outfit = Outfit({
 })
 
 export const metadata = {
-  title: "Blogyo | The Blogging Platform",
-  description: "Blogyo is a blogging platform that allows you to read latest blogs related to technology, programming, and much more."
+  title: "SufiBlog | The Blogging Platform",
+  description: "SufiBlog is a blogging platform that allows you to read latest blogs related to technology, programming, and much more."
 };
 
 export default function RootLayout({ children }) {

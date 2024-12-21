@@ -31,7 +31,7 @@ const BlogTableItem = ({
           {title ? title : 'no title'}
         </h4>
       </td>
-      <td className="px-6 py-4">{BlogDate.toDateString()}</td>
+      <td className="px-6 py-4 hidden md:block">{BlogDate.toDateString()}</td>
       <td
         className="px-6 py-4"
         onClick={() => {
