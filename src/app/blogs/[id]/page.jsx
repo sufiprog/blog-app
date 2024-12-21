@@ -1,6 +1,7 @@
 'use client'
 import { assets, blog_data } from '@/Assets/assets'
 import Footer from '@/components/Footer'
+import axios from 'axios'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
@@ -8,14 +9,13 @@ const page = ({ params }) => {
   const [data, setData] = useState(null)
 
   const fetchBlogData = async () => {
-    const safeParams = await params
+    const awaitedParams = await params
+    const paramsId = awaitedParams.id
 
-    for (let i = 0; i < blog_data.length; i++) {
-      if (Number(safeParams.id) === blog_data[i].id) {
-        setData(blog_data[i])
-        break
-      }
-    }
+    const response = await axios.get('/api/blog', {
+      params: { id: paramsId },
+    })
+    setData(response.data)
   }
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const page = ({ params }) => {
           </h1>
           <Image
             className="mx-auto  rounded-full border border-white mt-6"
-            src={data.author_img}
+            src={data.authorImg}
             width={60}
             height={60}
             alt=""
@@ -62,38 +62,7 @@ const page = ({ params }) => {
           height={720}
           className="border-4 border-white"
         />
-        <h1 className="my-8 text-[26px] font-semibold">Introduction:</h1>
-        <p className="">{data.description}</p>
-        <h3 className="my-5 text-[18px] font-semibold">
-          Step1: Some text appear
-        </h3>
-        <p className="my-3">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni
-          aliquam corrupti accusantium eaque repudiandae veritatis quos sint,
-          consectetur minus sed incidunt, amet illum ad voluptatum dolorem.
-          Dolorum, vitae hic? Nisi eos ut ex aliquid facere voluptatibus
-          temporibus ratione cum fugiat!
-        </p>
-        <h3 className="my-5 text-[18px] font-semibold">
-          Step1: Some text appear
-        </h3>
-        <p className="my-3">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni
-          aliquam corrupti accusantium eaque repudiandae veritatis quos sint,
-          consectetur minus sed incidunt, amet illum ad voluptatum dolorem.
-          Dolorum, vitae hic? Nisi eos ut ex aliquid facere voluptatibus
-          temporibus ratione cum fugiat!
-        </p>
-        <h3 className="my-5 text-[18px] font-semibold">
-          Step1: Some text appear
-        </h3>
-        <p className="my-3">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni
-          aliquam corrupti accusantium eaque repudiandae veritatis quos sint,
-          consectetur minus sed incidunt, amet illum ad voluptatum dolorem.
-          Dolorum, vitae hic? Nisi eos ut ex aliquid facere voluptatibus
-          temporibus ratione cum fugiat!
-        </p>
+        <p className="my-4">{data.description}</p>
         <div className="my-24">
           <p className="text-black font-semibold my-4 ">
             Share this article on social media
@@ -109,7 +78,7 @@ const page = ({ params }) => {
     </>
   ) : (
     <>
-      <div>No data</div>
+      <div>Loading...</div>
     </>
   )
 }

@@ -4,23 +4,26 @@ import { writeFile } from 'fs/promises'
 import BlogModel from '../../../../models/blogModel'
 import path from 'path'
 
+const fs = require('fs')
+
 const LoadDB = async () => {
   await ConnectDB()
 }
 LoadDB()
 
+//API Endpoint for GET Blog
 export async function GET(request) {
-  try {
-    return NextResponse.json({ message: 'API Working' })
-  } catch (error) {
-    console.error('Error during GET request:', error)
-    return NextResponse.json(
-      { error: 'Failed to process the GET request' },
-      { status: 500 }
-    )
+  const blogId = request.nextUrl.searchParams.get('id')
+  if (blogId) {
+    const blog = await BlogModel.findById(blogId)
+    return NextResponse.json(blog)
+  } else {
+    const blogs = await BlogModel.find({})
+    return NextResponse.json({ blogs })
   }
 }
 
+//API Endpoint for Uploading Blog
 export async function POST(request) {
   try {
     const formData = await request.formData()
@@ -66,13 +69,20 @@ export async function POST(request) {
 
     await BlogModel.create(blogdata) // Saving data to DB
 
-    console.log('Blog data saved to the database')
     return NextResponse.json({ success: true, msg: 'Blog Added' })
   } catch (error) {
-    console.error('Error during POST request:', error)
     return NextResponse.json(
       { error: 'Failed to process the request' },
       { status: 500 }
     )
   }
+}
+
+//API Endpoint for Deleting Blog
+export async function DELETE(request) {
+  const id = await request.nextUrl.searchParams.get('id')
+  const blog = await BlogModel.findById(id)
+  fs.unlink(`./public${blog.image}`, () => {})
+  await BlogModel.findByIdAndDelete(id)
+  return NextResponse.json({ msg: 'Blog Deleted' })
 }
