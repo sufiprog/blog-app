@@ -6,7 +6,9 @@ const Sidebar = () => {
   return (
     <div className="flex flex-col bg-slate-100">
       <div className="px-2 md:pl-14 py-3 border border-black">
+        <Link href="/admin">
         <Image src={assets.logo} alt="Logo" width={120} height={120} />
+        </Link>
       </div>
       <div className="w-28 md:w-80 h-full min-h-[100vh] border border-black py-12 relative">
         <div className="w-[50%] md:w-[80%] absolute right-0">

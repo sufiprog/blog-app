@@ -3,6 +3,7 @@
 import { assets } from '@/Assets/assets'
 import axios from 'axios'
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -15,23 +16,20 @@ const Header = () => {
     const formData = new FormData()
     formData.append('email', email)
     const response = await axios.post('/api/email', formData)
-    if(response.data.success){
+    if (response.data.success) {
       toast.success(response.data.msg)
-      setEmail("")
-    }else{
-      toast.error("Error")
+      setEmail('')
+    } else {
+      toast.error('Error')
     }
   }
 
   return (
     <div className="py-5 px-5 md:px-12 lg:px-28">
       <div className="flex justify-between items-center">
-        <Image
-          src={assets.logo}
-          alt="logo"
-          width={160}
-          className=""
-        />
+        <Link href="/">
+          <Image src={assets.logo} alt="logo" width={160} className="" />
+        </Link>
         <button className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black border-solid shadow-1">
           Get started <Image src={assets.arrow} alt="arrow" />
         </button>
